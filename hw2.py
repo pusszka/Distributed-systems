@@ -31,8 +31,9 @@ class Second:
 
 
 def target(F,S,K,locker,):
+    
+    locker.acquire()
     try:
-        locker.acquire()
         print('Start thread')
         first_num=0
         second_num=0
