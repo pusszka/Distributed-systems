@@ -2,7 +2,8 @@ import time
 import random
 from threading import Thread,Lock
 
-locker = Lock()
+locker1 = Lock()
+locker2 = Lock()
 class First:
     def __init__(self,value = 0):
 
@@ -30,7 +31,7 @@ class Second:
         self.value = value
 
 
-def target(F,S,K,locker,):
+def target1(F,S,K,locker):
     
     locker.acquire()
     try:
@@ -48,6 +49,24 @@ def target(F,S,K,locker,):
     finally:
         locker.release()
 
+def target2(F,S,K,locker):
+    
+    locker.acquire()
+    try:
+        print('Start thread')
+        first_num=0
+        second_num=0
+        for i in range(K):
+            N1=random.random()
+            N2=random.random()
+            new_num1=first_num+S.get_value()
+            new_num2=second_num+F.get_value()
+            S.set_value(new_num1)
+            F.set_value(new_num2)
+        
+    finally:
+        locker.release()
+
 
 if __name__ == '__main__':
     start_time = time.perf_counter()
@@ -61,11 +80,11 @@ if __name__ == '__main__':
 
         if i < N/2:
 
-            thread = Thread(target =target,args = (F,S,K1,locker) )
+            thread = Thread(target =target1,args = (F,S,K1,locker1) )
 
         elif i >= N/2:
 
-            thread = Thread(target = target,args = (F,S,K2,locker))
+            thread = Thread(target = target2,args = (F,S,K2,locker2))
 
         thread.start()
         threads.append(thread)
