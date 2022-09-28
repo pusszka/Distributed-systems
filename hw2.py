@@ -44,9 +44,8 @@ def target(F,S,K,locker,):
             F.set_value(new_num1)
             S.set_value(new_num2)
         
+    finally:
         locker.release()
-    except:
-        print("Exception")
 
 
 if __name__ == '__main__':
