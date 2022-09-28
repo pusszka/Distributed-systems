@@ -31,6 +31,7 @@ class Second:
 
 
 def target(F,S,K,locker,):
+    try:
         locker.acquire()
         print('Start thread')
         first_num=0
@@ -44,6 +45,8 @@ def target(F,S,K,locker,):
             S.set_value(new_num2)
         
         locker.release()
+    except:
+        print("Exception")
 
 
 if __name__ == '__main__':
